@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Register</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f7f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .logo img {
+            width: 180px; /* Adjust as needed */
+            height: auto;
+        }
+
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-top: 10px;
+        }
+
+        form {
+            width: 40%;
+            margin: 30px auto;
+            background-color: #ffffff;
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 100%;
+            background-color: #2980b9;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #21618c;
+        }
+
+        .error {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: -10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="logo">
+    <img th:src="@{/images/logo1.png}" alt="Drivana Logo" />
+</div>
+
+<h2>Welcome! Register as New User</h2>
+
+
+<form th:action="@{/register}" method="post" th:object="${user}">
+    <input type="text" th:field="*{username}" placeholder="Username"/><br/>
+    <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="error"></div>
+    <div th:if="${usernameError}" th:text="${usernameError}" class="error"></div>
+
+    <input type="password" th:field="*{password}" placeholder="Password"/><br/>
+    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error"></div>
+
+    <button type="submit">Register</button>
+</form>
+
+</body>
+</html>

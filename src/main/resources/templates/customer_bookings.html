@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Your Bookings | Drivana</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f7f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        .nav-links {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .nav-links a {
+            color: #2980b9;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        table {
+            width: 90%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+        }
+
+        th, td {
+            border: 1px solid #e1e4e8;
+            padding: 12px 15px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #2980b9;
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9fbfd;
+        }
+
+        tr:hover {
+            background-color: #eef4fa;
+        }
+
+        .no-bookings {
+            text-align: center;
+            color: #888;
+            padding: 20px;
+        }
+
+        .return-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .return-btn:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Your Bookings</h2>
+
+<div class="nav-links">
+    <a th:href="@{/customer/vehicles}">🚗 Book More</a> |
+    <a th:href="@{/logout}">🔒 Logout</a>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>Vehicle</th>
+        <th>Insurance</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Total Cost (₹)</th>
+        <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="b : ${bookings}">
+        <td th:text="${b.vehicle.brand + ' ' + b.vehicle.model}"></td>
+        <td th:text="${b.insurance != null ? b.insurance.providerName : 'None'}"></td>
+        <td th:text="${b.startDate}"></td>
+        <td th:text="${b.endDate}"></td>
+        <td th:text="${b.totalCost}"></td>
+        <td>
+            <form th:if="${!b.returned}" th:action="@{'/customer/return/' + ${b.id}}" method="post" style="display:inline;">
+                <button type="submit" class="return-btn">Return</button>
+            </form>
+            <span th:if="${b.returned}">✅ Returned</span>
+        </td>
+    </tr>
+    <tr th:if="${#lists.isEmpty(bookings)}">
+        <td colspan="6" class="no-bookings">No bookings yet</td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Insurance</title>
+</head>
+<body>
+<h2>Add New Insurance</h2>
+
+<form th:action="@{/admin/insurances/save}" th:object="${insurance}" method="post">
+    Provider Name: <input type="text" th:field="*{providerName}" required /><br/>
+    Description: <input type="text" th:field="*{description}" /><br/>
+    Cost: <input type="number" step="0.01" th:field="*{cost}" required /><br/>
+    <button type="submit">Save</button>
+</form>
+
+<a th:href="@{/admin/insurances}">Back to Insurance List</a>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>All Bookings</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+<h2>Bookings</h2>
+<table border="1">
+    <tr>
+        <th>Booking ID</th>
+        <th>Customer</th>
+        <th>Vehicle</th>
+        <th>Insurance</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Total Cost</th>
+    </tr>
+    <tr th:each="booking : ${bookings}">
+        <td th:text="${booking.id}"></td>
+        <td th:text="${booking.customerUsername}"></td>
+        <td th:text="${booking.vehicle.brand + ' ' + booking.vehicle.model}"></td>
+        <td th:text="${booking.insurance != null ? booking.insurance.providerName : 'No Insurance'}"></td>
+        <td th:text="${booking.startDate}"></td>
+        <td th:text="${booking.endDate}"></td>
+        <td th:text="${booking.totalCost}"></td>
+    </tr>
+</table>
+</body>
+</html>

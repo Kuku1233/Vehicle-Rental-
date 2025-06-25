@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin - Vehicles</title>
+</head>
+<body>
+<h2>Vehicle Management</h2>
+<a th:href="@{/admin/vehicles/add}">Add Vehicle</a>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Model</th>
+        <th>Type</th>
+        <th>Price</th>
+        <th>Actions</th>
+    </tr>
+    <tr th:each="v : ${vehicles}">
+        <td th:text="${v.id}"></td>
+        <td th:text="${v.model}"></td>
+        <td th:text="${v.type}"></td>
+        <td th:text="${v.pricePerDay}"></td>
+        <td>
+            <a th:href="@{'/admin/vehicles/delete/' + ${v.id}}">Delete</a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

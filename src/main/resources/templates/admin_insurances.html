@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Insurance Management</title>
+</head>
+<body>
+<h2>Insurance List</h2>
+
+<a th:href="@{/admin/insurances/add}">Add Insurance</a>
+
+<table border="1">
+    <tr>
+        <th>Provider Name</th>
+        <th>Description</th>
+        <th>Cost</th>
+        <th>Actions</th>
+    </tr>
+    <tr th:each="i : ${insurances}">
+        <td th:text="${i.providerName}"></td>
+        <td th:text="${i.description}"></td>
+        <td th:text="${i.cost}"></td>
+        <td>
+            <a th:href="@{'/admin/insurances/delete/' + ${i.id}}">Delete</a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

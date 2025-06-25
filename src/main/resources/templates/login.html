@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Drivana | Login</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f1f3f6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            margin: 80px auto;
+            text-align: center;
+        }
+
+        .logo img {
+            width: 180px;
+            height: auto;
+        }
+
+        .form-group {
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccd1d9;
+            border-radius: 5px;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 10px;
+            background-color: #2980b9;
+            border: none;
+            color: white;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-login:hover {
+            background-color: #3498db;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+        .register-link {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #2980b9;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .register-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-container">
+    <div class="logo">
+        <img th:src="@{/images/logo1.png}" alt="Drivana Logo" class="logo-img" />
+    </div>
+
+
+
+    <form th:action="@{/login}" method="post">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required/>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required/>
+        </div>
+
+        <div th:if="${param.error}" class="error">Invalid username or password</div>
+        <div th:if="${param.logout}" class="error">You have been logged out</div>
+
+        <button class="btn-login" type="submit">Login</button>
+    </form>
+    <a class="register-link" th:href="@{/register}">New here? Register</a>
+</div>
+
+</body>
+</html>
