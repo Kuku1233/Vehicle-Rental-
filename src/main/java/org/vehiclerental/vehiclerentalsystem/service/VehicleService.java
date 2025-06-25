@@ -28,4 +28,9 @@ public class VehicleService {
     public void deleteVehicle(Long id) {
         vehicleRepository.deleteById(id);
     }
+
+    public List<Vehicle> searchVehiclesByBrandOrModel(String keyword) {
+        return vehicleRepository.findByBrandContainingIgnoreCaseOrModelContainingIgnoreCase(keyword, keyword);
+    }
+
 }
