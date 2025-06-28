@@ -28,34 +28,28 @@ public class CustomerController {
     @Autowired
     private BookingService bookingService;
 
-    // ✅ 1. View all available vehicles or search
     @GetMapping("/vehicles")
     public String viewAvailableVehicles(@RequestParam(value = "keyword", required = false) String keyword, Model model) {
         List<Vehicle> vehicles;
-
         if (keyword != null && !keyword.trim().isEmpty()) {
             vehicles = vehicleService.searchVehiclesByBrandOrModel(keyword);
             model.addAttribute("keyword", keyword);
         } else {
             vehicles = vehicleService.getAllAvailableVehicles();
         }
-
         model.addAttribute("vehicles", vehicles);
         return "customer_vehicles";
     }
 
-    // ✅ 2. Show booking form for a specific vehicle
     @GetMapping("/book/{vehicleId}")
     public String showBookingForm(@PathVariable Long vehicleId, Model model) {
         Vehicle vehicle = vehicleService.getVehicleById(vehicleId);
         List<Insurance> insurances = insuranceService.getAllInsurances();
-
         model.addAttribute("vehicle", vehicle);
         model.addAttribute("insurances", insurances);
         return "book_vehicle";
     }
 
-    // ✅ 3. View customer's booking history
     @GetMapping("/bookings")
     public String viewBookingHistory(Model model, Principal principal) {
         String username = principal.getName();
@@ -64,14 +58,12 @@ public class CustomerController {
         return "customer_bookings";
     }
 
-    // ✅ 4. Mark booking as returned
     @PostMapping("/return/{bookingId}")
     public String returnVehicle(@PathVariable Long bookingId) {
         bookingService.markBookingAsReturned(bookingId);
         return "redirect:/customer/bookings?returned=true";
     }
 
-    // ✅ 5. Process booking with date validation
     @PostMapping("/book/process")
     public String processBooking(@RequestParam Long vehicleId,
                                  @RequestParam(required = false) Long insuranceId,
@@ -99,8 +91,33 @@ public class CustomerController {
         Vehicle vehicle = vehicleService.getVehicleById(vehicleId);
         Insurance insurance = (insuranceId != null) ? insuranceService.getById(insuranceId) : null;
 
-        bookingService.createBooking(principal.getName(), vehicle, insurance, start, end);
+        Booking booking = bookingService.createBooking(principal.getName(), vehicle, insurance, start, end);
 
-        return "redirect:/customer/vehicles?booked=true";
+        return "redirect:/customer/payment?bookingId=" + booking.getId();
+    }
+
+    // ✅ Payment Page
+    @GetMapping("/payment")
+    public String showPaymentPage(@RequestParam Long bookingId, Model model) {
+        Booking booking = bookingService.getBookingById(bookingId);
+        model.addAttribute("bookingId", bookingId);
+        model.addAttribute("totalAmount", booking.getTotalCost());
+        model.addAttribute("notPaid", true);
+        return "payment";
+    }
+
+    // ✅ Process Payment
+    @PostMapping("/payment/process")
+    public String processPayment(@RequestParam Long bookingId,
+                                 @RequestParam String cardNumber,
+                                 @RequestParam String expiry,
+                                 @RequestParam String pin,
+                                 Model model) {
+        Booking booking = bookingService.getBookingById(bookingId);
+        booking.setStatus("PAID");
+        bookingService.saveBooking(booking);
+
+        model.addAttribute("paid", true);
+        return "payment";
     }
 }

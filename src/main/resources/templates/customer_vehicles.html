@@ -8,60 +8,84 @@
             font-family: 'Segoe UI', sans-serif;
             background-color: #f4f7f9;
             margin: 0;
-            padding: 20px;
+            padding: 0;
+        }
+
+        /* --- NAVBAR --- */
+        .navbar {
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffffff;
+            padding: 10px 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .logo img {
+            width: 180px;
+            height: auto;
+            justify-content: space-between;
+        }
+
+        .navbar-search {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .navbar-search form {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-search input[type="text"] {
+            padding: 8px 12px;
+            height: 38px;
+            width: 280px;
+            border: 1px solid #ccc;
+            border-radius: 4px 0 0 4px;
+            font-size: 14px;
+        }
+
+        .navbar-search button {
+            height: 38px;
+            margin-bottom:9px;
+            padding: 0 12px;
+            font-size: 14px;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            background-color: #2980b9;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            margin-left: -1px;
+        }
+
+        .navbar-search button:hover {
+            background-color: #21618c;
+        }
+
+        .navbar-links a {
+            margin-left: 20px;
+            text-decoration: none;
+            font-weight: 500;
+            color: #2980b9;
+        }
+
+        .navbar-links a:hover {
+            text-decoration: underline;
         }
 
         h2 {
             text-align: center;
             color: #2c3e50;
-        }
-
-        .nav-links {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .nav-links a {
-            color: #2980b9;
-            text-decoration: none;
-            margin: 0 15px;
-            font-weight: 500;
-        }
-
-        .nav-links a:hover {
-            text-decoration: underline;
-        }
-
-        .search-container {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .search-container input[type="text"] {
-            padding: 8px 12px;
-            width: 300px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        .search-container button {
-            padding: 8px 14px;
-            background-color: #2980b9;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            margin-left: 8px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .search-container button:hover {
-            background-color: #21618c;
+            margin-top: 20px;
         }
 
         table {
-            width: 90%;
-            margin: 0 auto;
+            width: 95%;
+            margin: 20px auto;
             border-collapse: collapse;
             background-color: #ffffff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
@@ -100,29 +124,44 @@
         .btn-book:hover {
             background-color: #1e8449;
         }
+
+        .vehicle-image {
+            width: 100px;
+            height: 60px;
+            object-fit: cover;
+        }
     </style>
 </head>
 <body>
 
-<div class="nav-links">
-    <a th:href="@{/customer/bookings}">📋 My Bookings</a> |
-    <a th:href="@{/logout}">🔒 Logout</a>
+<!-- 🔝 NAVBAR -->
+<div class="navbar">
+
+        <div class="logo">
+            <img th:src="@{/images/logo1.png}" alt="Drivana Logo" class="logo-img" />
+        </div>
+
+
+    <div class="navbar-search">
+        <form th:action="@{/customer/vehicles}" method="get">
+            <input type="text" name="keyword" placeholder="Search by brand or model" th:value="${keyword}">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <div class="navbar-links">
+        <a th:href="@{/customer/bookings}">📋 My Bookings</a>
+        <a th:href="@{/logout}">🔒 Logout</a>
+    </div>
 </div>
 
 <h2>Available Vehicles</h2>
-
-<!-- 🔍 Search Form -->
-<div class="search-container">
-    <form th:action="@{/customer/vehicles}" method="get">
-        <input type="text" name="keyword" placeholder="Search by brand or model" th:value="${keyword}">
-        <button type="submit">Search</button>
-    </form>
-</div>
 
 <!-- 🚗 Vehicles Table -->
 <table>
     <thead>
     <tr>
+        <th>Image</th>
         <th>Brand</th>
         <th>Model</th>
         <th>Type</th>
@@ -132,6 +171,9 @@
     </thead>
     <tbody>
     <tr th:each="v : ${vehicles}">
+        <td>
+            <img th:src="@{${v.imagePath}}" alt="Car Image" class="vehicle-image"/>
+        </td>
         <td th:text="${v.brand}">Brand</td>
         <td th:text="${v.model}">Model</td>
         <td th:text="${v.type}">Type</td>

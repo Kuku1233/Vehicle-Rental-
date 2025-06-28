@@ -1,16 +1,24 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head><title>Add Vehicle</title>
+<head>
+    <title>Add Vehicle</title>
     <link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
 <h2>Add Vehicle</h2>
-<form th:action="@{/admin/vehicles/save}" th:object="${vehicle}" method="post">
+
+<form th:action="@{/admin/vehicles/save}" method="post" enctype="multipart/form-data" th:object="${vehicle}">
     <input type="text" th:field="*{brand}" placeholder="Brand" required/><br/>
     <input type="text" th:field="*{model}" placeholder="Model" required/><br/>
     <input type="text" th:field="*{type}" placeholder="Type" required/><br/>
     <input type="number" th:field="*{pricePerDay}" placeholder="Price Per Day" required/><br/>
+
+    <!-- New field to upload image -->
+    <input type="file" name="imageFile" accept="image/*" required/><br/>
+
     <button type="submit">Save</button>
 </form>
+
+
 </body>
 </html>

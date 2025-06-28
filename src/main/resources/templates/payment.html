@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Payment | Drivana</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f1f3f6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .payment-container {
+            width: 100%;
+            max-width: 400px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            margin: 80px auto;
+            text-align: center;
+        }
+
+        h2 {
+            color: #2c3e50;
+        }
+
+        .form-group {
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccd1d9;
+            border-radius: 5px;
+        }
+
+        .btn-pay {
+            width: 100%;
+            padding: 12px;
+            background-color: #27ae60;
+            border: none;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-pay:hover {
+            background-color: #1e8449;
+        }
+
+        .success-msg {
+            color: #27ae60;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .link {
+            display: block;
+            margin-top: 20px;
+            font-size: 15px;
+            color: #2980b9;
+            text-decoration: none;
+        }
+
+        .link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="payment-container" th:if="${notPaid}">
+    <h2>Payment</h2>
+    <p>Total Amount: ₹<span th:text="${totalAmount}">0.00</span></p>
+
+    <form th:action="@{/customer/payment/process}" method="post">
+        <input type="hidden" name="bookingId" th:value="${bookingId}" />
+
+        <div class="form-group">
+            <label>Card Number</label>
+            <input type="text" name="cardNumber" placeholder="1234 5678 9012 3456" required />
+        </div>
+
+        <div class="form-group">
+            <label>Expiry Date</label>
+            <input type="month" name="expiry" required />
+        </div>
+
+        <div class="form-group">
+            <label>PIN</label>
+            <input type="password" name="pin" maxlength="4" required />
+        </div>
+
+        <button class="btn-pay" type="submit">Pay</button>
+    </form>
+</div>
+
+<div class="payment-container" th:if="${paid}">
+    <h2>Payment Done ✅</h2>
+    <p class="success-msg">Thank you! Your payment has been successfully processed.</p>
+    <a class="link" th:href="@{/customer/bookings}">🔙 Go to My Bookings</a>
+</div>
+
+</body>
+</html>

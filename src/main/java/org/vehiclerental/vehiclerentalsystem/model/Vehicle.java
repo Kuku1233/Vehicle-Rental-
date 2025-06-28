@@ -1,9 +1,13 @@
 package org.vehiclerental.vehiclerentalsystem.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "vehicles")
+@Getter
+@Setter
 public class Vehicle {
 
     @Id
@@ -18,6 +22,9 @@ public class Vehicle {
     // Sedan, SUV, etc.
     @Column(nullable = false)
     private double pricePerDay;
+    @Column(name = "image_path")
+    private String imagePath;
+
 
     private boolean available = true;
 
@@ -32,28 +39,11 @@ public class Vehicle {
         this.available = true;
     }
 
-    // Getters & Setters
-    public Long getId() { return id; }
+    public String getImagePath() {
+        return imagePath;
+    }
 
-    public void setId(Long id) { this.id = id; }
-
-    public String getBrand() { return brand; }
-
-    public void setBrand(String brand) { this.brand = brand; }
-
-    public String getModel() { return model; }
-
-    public void setModel(String model) { this.model = model; }
-
-    public String getType() { return type; }
-
-    public void setType(String type) { this.type = type; }
-
-    public double getPricePerDay() { return pricePerDay; }
-
-    public void setPricePerDay(double pricePerDay) { this.pricePerDay = pricePerDay; }
-
-    public boolean isAvailable() { return available; }
-
-    public void setAvailable(boolean available) { this.available = available; }
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
 }

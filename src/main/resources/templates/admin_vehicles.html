@@ -15,6 +15,7 @@
         <th>Actions</th>
     </tr>
     <tr th:each="v : ${vehicles}">
+        <td><img th:src="@{${v.imagePath}}" width="100" /></td>
         <td th:text="${v.id}"></td>
         <td th:text="${v.model}"></td>
         <td th:text="${v.type}"></td>

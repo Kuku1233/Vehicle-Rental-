@@ -1,9 +1,15 @@
 package org.vehiclerental.vehiclerentalsystem.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "insurance")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Insurance {
 
     @Id
@@ -15,29 +21,10 @@ public class Insurance {
     @Column(nullable = false)
     private double cost;
 
-    // Constructors
-    public Insurance() {}
 
     public Insurance(String providerName, String description, double cost) {
         this.providerName = providerName;
         this.description = description;
         this.cost = cost;
     }
-
-    // Getters and Setters
-    public Long getId() { return id; }
-
-    public void setId(Long id) { this.id = id; }
-
-    public String getProviderName() { return providerName; }
-
-    public void setProviderName(String providerName) { this.providerName = providerName; }
-
-    public String getDescription() { return description; }
-
-    public void setDescription(String description) { this.description = description; }
-
-    public double getCost() { return cost; }
-
-    public void setCost(double cost) { this.cost = cost; }
 }

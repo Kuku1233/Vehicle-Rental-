@@ -20,7 +20,7 @@ public class AuthController {
 
     @GetMapping("/login")
     public String showLoginPage() {
-        return "login";  // returns login.html
+        return "login";
     }
 
     @GetMapping("/register")
@@ -37,10 +37,10 @@ public class AuthController {
         }
 
 
-        // ✅ Hash the password before saving
+        // Hash the password before saving
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        // ✅ Set default role
+        // Set default role
         user.setRole("ROLE_CUSTOMER");
 
         userService.saveUser(user);
