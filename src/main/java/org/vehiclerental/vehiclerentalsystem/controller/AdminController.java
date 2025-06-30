@@ -76,45 +76,78 @@ public class AdminController {
     }
 
 
-    // ✅ Delete vehicle
+    // Delete vehicle
     @GetMapping("/vehicles/delete/{id}")
     public String deleteVehicle(@PathVariable Long id) {
         vehicleService.deleteVehicle(id);
         return "redirect:/admin/vehicles";
     }
 
-    // ✅ View all insurances
+    // View all insurances
     @GetMapping("/insurances")
     public String viewInsurances(Model model) {
         model.addAttribute("insurances", insuranceService.getAllInsurances());
         return "admin_insurances";
     }
 
-    // ✅ Add insurance form
+    // Add insurance form
     @GetMapping("/insurances/add")
     public String showAddInsuranceForm(Model model) {
         model.addAttribute("insurance", new Insurance());
         return "add_insurances";
     }
 
-    // ✅ Save insurance
+    // Save insurance
     @PostMapping("/insurances/save")
     public String saveInsurance(@ModelAttribute Insurance insurance) {
         insuranceService.saveInsurance(insurance);
         return "redirect:/admin/insurances";
     }
 
-    // ✅ Delete insurance
+    // Delete insurance
     @GetMapping("/insurances/delete/{id}")
     public String deleteInsurance(@PathVariable Long id) {
         insuranceService.deleteInsurance(id);
         return "redirect:/admin/insurances";
     }
 
-    // ✅ View bookings
+    // View bookings
     @GetMapping("/bookings")
     public String viewBookings(Model model) {
         model.addAttribute("bookings", bookingService.getAllBookings());
         return "admin_bookings";
     }
+    // Show form to update existing vehicle
+    @GetMapping("/vehicles/update/{id}")
+    public String showUpdateVehicleForm(@PathVariable Long id, Model model) {
+        Vehicle vehicle = vehicleService.getVehicleById(id);
+        model.addAttribute("vehicle", vehicle);
+        return "update_vehicle"; // maps to update_vehicle.html
+    }
+
+    // Handle update vehicle submission
+    @PostMapping("/vehicles/update")
+    public String updateVehicle(@ModelAttribute Vehicle vehicle,
+                                @RequestParam("imageFile") MultipartFile imageFile) {
+        try {
+            if (!imageFile.isEmpty()) {
+                String uploadDir = "src/main/resources/static/images/";
+                File dir = new File(uploadDir);
+                if (!dir.exists()) dir.mkdirs();
+
+                String filePath = uploadDir + imageFile.getOriginalFilename();
+                Path path = Paths.get(filePath);
+                Files.write(path, imageFile.getBytes());
+
+                vehicle.setImagePath("/images/" + imageFile.getOriginalFilename());
+            }
+            vehicle.setAvailable(true); // Optional: keep vehicle available
+            vehicleService.saveVehicle(vehicle);
+            return "redirect:/admin/vehicles";
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "error";
+        }
+    }
+
 }

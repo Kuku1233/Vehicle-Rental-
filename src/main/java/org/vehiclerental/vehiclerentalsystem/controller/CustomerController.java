@@ -96,7 +96,7 @@ public class CustomerController {
         return "redirect:/customer/payment?bookingId=" + booking.getId();
     }
 
-    // ✅ Payment Page
+    // Payment Page
     @GetMapping("/payment")
     public String showPaymentPage(@RequestParam Long bookingId, Model model) {
         Booking booking = bookingService.getBookingById(bookingId);
@@ -106,7 +106,7 @@ public class CustomerController {
         return "payment";
     }
 
-    // ✅ Process Payment
+    //Process Payment
     @PostMapping("/payment/process")
     public String processPayment(@RequestParam Long bookingId,
                                  @RequestParam String cardNumber,

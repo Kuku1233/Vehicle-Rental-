@@ -1,29 +1,131 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head><title>All Bookings</title>
+<head>
+    <title>All Bookings | Admin Panel</title>
     <link rel="stylesheet" href="/css/style.css" />
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f7f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h2 {
+            margin: 0;
+            font-size: 22px;
+        }
+
+        .back-btn {
+            background-color: #3498db;
+            color: white;
+            padding: 8px 14px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .container {
+            padding: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 0 12px rgba(0,0,0,0.05);
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 14px;
+            border-bottom: 1px solid #eaeaea;
+            text-align: center;
+        }
+
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f2f9ff;
+        }
+
+        @media (max-width: 768px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+
+            thead tr {
+                display: none;
+            }
+
+            td {
+                position: relative;
+                padding-left: 50%;
+                text-align: left;
+                border: none;
+                border-bottom: 1px solid #ddd;
+            }
+
+            td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 10px;
+                font-weight: bold;
+                color: #555;
+            }
+        }
+    </style>
 </head>
 <body>
-<h2>Bookings</h2>
-<table border="1">
-    <tr>
-        <th>Booking ID</th>
-        <th>Customer</th>
-        <th>Vehicle</th>
-        <th>Insurance</th>
-        <th>Start Date</th>
-        <th>End Date</th>
-        <th>Total Cost</th>
-    </tr>
-    <tr th:each="booking : ${bookings}">
-        <td th:text="${booking.id}"></td>
-        <td th:text="${booking.customerUsername}"></td>
-        <td th:text="${booking.vehicle.brand + ' ' + booking.vehicle.model}"></td>
-        <td th:text="${booking.insurance != null ? booking.insurance.providerName : 'No Insurance'}"></td>
-        <td th:text="${booking.startDate}"></td>
-        <td th:text="${booking.endDate}"></td>
-        <td th:text="${booking.totalCost}"></td>
-    </tr>
-</table>
+
+<header>
+    <h2>All Bookings</h2>
+    <a href="/admin/dashboard" class="back-btn">⬅ Back to Dashboard</a>
+</header>
+
+<div class="container">
+    <table>
+        <thead>
+        <tr>
+            <th>Booking ID</th>
+            <th>Customer</th>
+            <th>Vehicle</th>
+            <th>Insurance</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Total Cost (₹)</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="booking : ${bookings}">
+            <td data-label="Booking ID" th:text="${booking.id}">1</td>
+            <td data-label="Customer" th:text="${booking.customerUsername}">username</td>
+            <td data-label="Vehicle" th:text="${booking.vehicle.brand + ' ' + booking.vehicle.model}">Swift VXi</td>
+            <td data-label="Insurance" th:text="${booking.insurance != null ? booking.insurance.providerName : 'No Insurance'}">ICICI</td>
+            <td data-label="Start Date" th:text="${booking.startDate}">2025-07-01</td>
+            <td data-label="End Date" th:text="${booking.endDate}">2025-07-05</td>
+            <td data-label="Total Cost" th:text="${booking.totalCost}">₹4000</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
 </body>
 </html>
