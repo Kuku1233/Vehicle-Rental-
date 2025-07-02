@@ -6,118 +6,126 @@
     <style>
         body {
             font-family: 'Segoe UI', sans-serif;
-            background-color: #f4f7f9;
+            background-color: #1e1e2f;
+            color: #f1f1f1;
             margin: 0;
-            padding-top: 70px; /* To avoid navbar overlap */
+            padding-top: 80px;
+        }
+        tbody tr {
+            background-color: #2e3047;
         }
 
-        /* --- Navbar Styles --- */
+        tr:nth-child(even) {
+            background-color: #3a3d5c;
+        }
+
+
         .navbar {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            z-index: 1000;
-            background-color: #ffffff;
+            background-color: #111122;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 30px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 12px 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
         }
 
         .logo img {
-            width: 180px;
+            width: 160px;
             height: auto;
-            justify-content: space-between;
         }
 
-        .navbar-center a {
-            text-decoration: none;
-            margin: 0 15px;
-            color: #2980b9;
-            font-weight: 500;
-        }
-
-        .navbar-center a:hover {
-            text-decoration: underline;
-        }
-
+        .navbar-center a,
         .navbar-right a {
-            margin-left: 20px;
             text-decoration: none;
+            margin: 0 12px;
+            color: #00bcd4;
             font-weight: 500;
-            color: #2980b9;
+            transition: color 0.3s ease;
         }
 
+        .navbar-center a:hover,
         .navbar-right a:hover {
-            text-decoration: underline;
+            color: #1de9b6;
         }
 
         h2 {
             text-align: center;
-            color: #2c3e50;
+            color: #ffffff;
             margin-top: 10px;
+            font-size: 28px;
+            font-weight: bold;
         }
 
         table {
             width: 90%;
-            margin: 20px auto;
+            margin: 30px auto;
             border-collapse: collapse;
-            background-color: #ffffff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+            background-color: #2c2f4a;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 12px rgba(0,0,0,0.5);
         }
 
         th, td {
-            border: 1px solid #e1e4e8;
-            padding: 12px 15px;
+            padding: 16px 18px;
             text-align: center;
+            border-bottom: 1px solid #3f4163;
         }
 
         th {
-            background-color: #2980b9;
-            color: white;
+            background-color: #383c5c;
+            color: #00bcd4;
             font-weight: bold;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f9fbfd;
+            text-transform: uppercase;
         }
 
         tr:hover {
-            background-color: #eef4fa;
+            background-color: #444767;
         }
 
         .no-bookings {
             text-align: center;
-            color: #888;
-            padding: 20px;
+            color: #999;
+            padding: 24px;
+            font-size: 16px;
         }
 
         .return-btn {
             background-color: #e74c3c;
             color: white;
             border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
+            padding: 8px 14px;
+            border-radius: 6px;
             cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s ease;
         }
 
         .return-btn:hover {
             background-color: #c0392b;
         }
+
+        span {
+            font-weight: bold;
+            color: #4caf50;
+        }
     </style>
 </head>
 <body>
 
-<!-- ✅ Navbar -->
+<!-- ✅ NAVBAR -->
 <div class="navbar">
     <div class="logo">
-        <img th:src="@{/images/logo1.png}" alt="Drivana Logo" class="logo-img" />
+        <img th:src="@{/images/logo1.png}" alt="Drivana Logo">
     </div>
 
     <div class="navbar-center">
-        <a th:href="@{/customer/vehicles}">Book More</a>
+        <a th:href="@{/customer/vehicles}">🚗 Book More</a>
     </div>
 
     <div class="navbar-right">
@@ -134,17 +142,17 @@
         <th>Insurance</th>
         <th>Start Date</th>
         <th>End Date</th>
-        <th>Total Cost (₹)</th>
+        <th>Total (₹)</th>
         <th>Status</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="b : ${bookings}">
-        <td th:text="${b.vehicle.brand + ' ' + b.vehicle.model}"></td>
-        <td th:text="${b.insurance != null ? b.insurance.providerName : 'None'}"></td>
-        <td th:text="${b.startDate}"></td>
-        <td th:text="${b.endDate}"></td>
-        <td th:text="${b.totalCost}"></td>
+        <td th:text="${b.vehicle.brand + ' ' + b.vehicle.model}">Vehicle</td>
+        <td th:text="${b.insurance != null ? b.insurance.providerName : 'None'}">Insurance</td>
+        <td th:text="${b.startDate}">Start</td>
+        <td th:text="${b.endDate}">End</td>
+        <td th:text="${b.totalCost}">Cost</td>
         <td>
             <form th:if="${!b.returned}" th:action="@{'/customer/return/' + ${b.id}}" method="post" style="display:inline;">
                 <button type="submit" class="return-btn">Return</button>
@@ -157,6 +165,37 @@
     </tr>
     </tbody>
 </table>
+<footer style="background-color: #2c2c3f; color: #ccc; padding: 40px 20px; margin-top: 40px; font-family: 'Segoe UI', sans-serif;">
+    <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
+        <!-- Column 1: About -->
+        <div style="flex: 1; min-width: 200px; margin-bottom: 20px;">
+            <h3 style="color: #00bcd4;">Drivana</h3>
+            <p style="line-height: 1.6;">Your trusted car rental partner. Experience seamless bookings, flexible rentals, and quality service at every mile.</p>
+        </div>
+
+        <!-- Column 2: Quick Links -->
+        <div style="flex: 1; min-width: 200px; margin-bottom: 20px;">
+            <h4 style="color: #00bcd4;">Quick Links</h4>
+            <ul style="list-style: none; padding: 0; line-height: 2;">
+                <li><a th:href="@{/customer/vehicles}" style="color: #ccc; text-decoration: none;">Browse Vehicles</a></li>
+                <li><a th:href="@{/customer/bookings}" style="color: #ccc; text-decoration: none;">My Bookings</a></li>
+                <li><a th:href="@{/logout}" style="color: #ccc; text-decoration: none;">Logout</a></li>
+            </ul>
+        </div>
+
+        <!-- Column 3: Contact -->
+        <div style="flex: 1; min-width: 200px; margin-bottom: 20px;">
+            <h4 style="color: #00bcd4;">Contact</h4>
+            <p>Email: support@drivana.com</p>
+            <p>Phone: +91-9876543210</p>
+            <p>Location: Chandigarh, India</p>
+        </div>
+    </div>
+
+    <hr style="margin: 30px 0; border-color: #444;">
+
+    <p style="text-align: center; color: #888;">&copy; 2025 Drivana. All rights reserved.</p>
+</footer>
 
 </body>
 </html>

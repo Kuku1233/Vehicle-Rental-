@@ -5,24 +5,32 @@
     <style>
         body {
             font-family: 'Segoe UI', sans-serif;
-            background-color: #f1f3f6;
+            background-color: #1e1e2f;
+            color: #f1f1f1;
             margin: 0;
             padding: 0;
         }
 
         .payment-container {
             width: 100%;
-            max-width: 400px;
-            background: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            max-width: 450px;
+            background: #2a2d45;
+            padding: 30px 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.4);
             margin: 80px auto;
             text-align: center;
         }
 
         h2 {
-            color: #2c3e50;
+            color: #00bcd4;
+            font-size: 26px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 16px;
+            color: #cfd8dc;
         }
 
         .form-group {
@@ -31,36 +39,49 @@
         }
 
         .form-group label {
-            font-weight: bold;
+            font-weight: 500;
             display: block;
             margin-bottom: 5px;
+            color: #cfd8dc;
         }
 
         .form-group input {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ccd1d9;
-            border-radius: 5px;
+            padding: 12px;
+            background-color: #1c1c2f;
+            color: #f1f1f1;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            outline: none;
+            transition: border 0.3s ease;
+        }
+
+        .form-group input:focus {
+            border: 2px solid #00bcd4;
         }
 
         .btn-pay {
             width: 100%;
             padding: 12px;
-            background-color: #27ae60;
-            border: none;
+            background: linear-gradient(135deg, #00bcd4, #2196f3);
             color: white;
             font-size: 16px;
             font-weight: bold;
-            border-radius: 5px;
+            border: none;
+            border-radius: 8px;
+            margin-top: 20px;
             cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
         }
 
         .btn-pay:hover {
-            background-color: #1e8449;
+            background: linear-gradient(135deg, #00acc1, #1e88e5);
+            transform: scale(1.03);
         }
 
         .success-msg {
-            color: #27ae60;
+            color: #4caf50;
             font-size: 18px;
             font-weight: bold;
             margin-top: 20px;
@@ -68,13 +89,15 @@
 
         .link {
             display: block;
-            margin-top: 20px;
+            margin-top: 25px;
             font-size: 15px;
-            color: #2980b9;
+            color: #00bcd4;
             text-decoration: none;
+            font-weight: 500;
         }
 
         .link:hover {
+            color: #1de9b6;
             text-decoration: underline;
         }
     </style>
@@ -82,7 +105,7 @@
 <body>
 
 <div class="payment-container" th:if="${notPaid}">
-    <h2>Payment</h2>
+    <h2>Make Payment</h2>
     <p>Total Amount: ₹<span th:text="${totalAmount}">0.00</span></p>
 
     <form th:action="@{/customer/payment/process}" method="post">
@@ -103,7 +126,7 @@
             <input type="password" name="pin" maxlength="4" required />
         </div>
 
-        <button class="btn-pay" type="submit">Pay</button>
+        <button class="btn-pay" type="submit">💳 Pay Now</button>
     </form>
 </div>
 

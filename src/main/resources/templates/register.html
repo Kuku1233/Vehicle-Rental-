@@ -1,71 +1,93 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Register</title>
+    <title>Drivana | Register</title>
     <link rel="stylesheet" href="/css/style.css" />
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Segoe UI', sans-serif;
-            background-color: #f4f7f9;
+            background: linear-gradient(135deg, #1f1c2c, #928dab);
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            color: #fff;
         }
 
         .logo {
             text-align: center;
-            margin-top: 20px;
+            padding-top: 30px;
         }
 
         .logo img {
-            width: 180px; /* Adjust as needed */
+            width: 160px;
             height: auto;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.2));
         }
 
         h2 {
             text-align: center;
-            color: #2c3e50;
-            margin-top: 10px;
+            color: #ffffff;
+            font-weight: 500;
+            margin-top: 20px;
         }
 
         form {
-            width: 40%;
+            width: 100%;
+            max-width: 450px;
             margin: 30px auto;
-            background-color: #ffffff;
-            padding: 30px 40px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            background-color: #2a2a40;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
         }
 
         input[type="text"],
         input[type="password"] {
             width: 100%;
-            padding: 10px;
-            margin: 10px 0 15px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            padding: 14px;
+            margin-top: 20px;
+            background: #3d3d5c;
+            border: 1px solid transparent;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 15px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            border-color: #00c0ff;
+            background: #464671;
         }
 
         button {
             width: 100%;
-            background-color: #2980b9;
-            color: white;
-            padding: 10px 15px;
+            padding: 14px;
+            margin-top: 25px;
+            background-color: #00c0ff;
             border: none;
-            border-radius: 5px;
-            font-weight: bold;
+            border-radius: 8px;
+            color: white;
             font-size: 16px;
+            font-weight: bold;
             cursor: pointer;
+            transition: 0.3s ease-in-out;
         }
 
         button:hover {
-            background-color: #21618c;
+            background-color: #00a3cc;
+            box-shadow: 0 0 8px rgba(0, 192, 255, 0.4);
         }
 
         .error {
-            color: #e74c3c;
+            color: #ff6b6b;
             font-size: 14px;
-            margin-top: -10px;
-            margin-bottom: 10px;
+            margin-top: 6px;
+            margin-bottom: -10px;
         }
     </style>
 </head>
@@ -75,15 +97,14 @@
     <img th:src="@{/images/logo1.png}" alt="Drivana Logo" />
 </div>
 
-<h2>Welcome! Register as New User</h2>
-
+<h2>Create Your Drivana Account</h2>
 
 <form th:action="@{/register}" method="post" th:object="${user}">
-    <input type="text" th:field="*{username}" placeholder="Username"/><br/>
+    <input type="text" th:field="*{username}" placeholder="Username" />
     <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="error"></div>
     <div th:if="${usernameError}" th:text="${usernameError}" class="error"></div>
 
-    <input type="password" th:field="*{password}" placeholder="Password"/><br/>
+    <input type="password" th:field="*{password}" placeholder="Password" />
     <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error"></div>
 
     <button type="submit">Register</button>

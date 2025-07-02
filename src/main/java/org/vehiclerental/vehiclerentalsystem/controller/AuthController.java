@@ -1,19 +1,20 @@
 package org.vehiclerental.vehiclerentalsystem.controller;
 
 import org.vehiclerental.vehiclerentalsystem.model.User;
-import org.vehiclerental.vehiclerentalsystem.service.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.vehiclerental.vehiclerentalsystem.service.UserServiceImpl;
 
 @Controller
 public class AuthController {
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;

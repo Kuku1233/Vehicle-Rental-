@@ -71,7 +71,7 @@ public class AdminController {
             return "redirect:/admin/vehicles";
         } catch (IOException e) {
             e.printStackTrace();
-            return "error"; // handle error gracefully
+            return "error";
         }
     }
 
@@ -122,7 +122,7 @@ public class AdminController {
     public String showUpdateVehicleForm(@PathVariable Long id, Model model) {
         Vehicle vehicle = vehicleService.getVehicleById(id);
         model.addAttribute("vehicle", vehicle);
-        return "update_vehicle"; // maps to update_vehicle.html
+        return "update_vehicle";
     }
 
     // Handle update vehicle submission
@@ -141,7 +141,7 @@ public class AdminController {
 
                 vehicle.setImagePath("/images/" + imageFile.getOriginalFilename());
             }
-            vehicle.setAvailable(true); // Optional: keep vehicle available
+            vehicle.setAvailable(true);
             vehicleService.saveVehicle(vehicle);
             return "redirect:/admin/vehicles";
         } catch (IOException e) {

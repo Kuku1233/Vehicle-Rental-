@@ -1,83 +1,119 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Book Vehicle</title>
+    <title>Book Vehicle | Drivana</title>
     <link rel="stylesheet" href="/css/style.css" />
     <style>
         body {
             font-family: 'Segoe UI', sans-serif;
-            background-color: #f4f7f9;
+            background-color: #1e1e2f;
+            color: #f1f1f1;
             margin: 0;
-            padding: 20px;
+            padding: 30px 20px;
         }
 
         h2 {
             text-align: center;
-            color: #2c3e50;
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: #00bcd4;
         }
 
         form {
-            width: 50%;
+            max-width: 500px;
+            background-color: #2a2d45;
+            padding: 30px;
             margin: 0 auto;
-            background-color: #fff;
-            padding: 25px 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 0 16px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease;
+        }
+
+        form:hover {
+            transform: translateY(-2px);
         }
 
         label {
             display: block;
-            margin-top: 15px;
-            font-weight: 500;
+            margin: 15px 0 6px;
+            font-weight: bold;
+            color: #cfd8dc;
         }
 
         input[type="date"],
         select {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             margin-top: 5px;
-            margin-bottom: 15px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
+            border-radius: 6px;
+            border: none;
+            font-size: 14px;
+            background-color: #1c1c2f;
+            color: #f1f1f1;
+            outline: none;
+            transition: border 0.3s ease;
+        }
+
+        input[type="date"]:focus,
+        select:focus {
+            border: 2px solid #00bcd4;
         }
 
         button {
-            background-color: #2980b9;
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #00bcd4, #2196f3);
             color: white;
-            padding: 10px 16px;
-            border: none;
-            border-radius: 5px;
             font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 16px;
             cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
         }
 
         button:hover {
-            background-color: #21618c;
+            background: linear-gradient(135deg, #00acc1, #1e88e5);
+            transform: scale(1.02);
+        }
+
+        option {
+            background-color: #1c1c2f;
+            color: #f1f1f1;
+        }
+
+        ::placeholder {
+            color: #aaa;
         }
     </style>
 </head>
 <body>
 
-<h2>Book Vehicle</h2>
+<h2>Book Your Vehicle</h2>
 
 <form th:action="@{/customer/book/process}" method="post">
     <input type="hidden" name="vehicleId" th:value="${vehicle.id}" />
 
-    <label>Start Date:</label>
-    <input type="date" name="startDate" required
-           min="${#dates.format(T(java.time.LocalDate).now(), 'yyyy-MM-dd')}" /><br/>
+    <label for="startDate">Start Date:</label>
+    <input type="date" name="startDate" id="startDate" required
+           min="${#dates.format(T(java.time.LocalDate).now(), 'yyyy-MM-dd')}" />
 
-    <label>End Date:</label>
-    <input type="date" name="endDate" required
-           min="${#dates.format(T(java.time.LocalDate).now(), 'yyyy-MM-dd')}" /><br/>
+    <label for="endDate">End Date:</label>
+    <input type="date" name="endDate" id="endDate" required
+           min="${#dates.format(T(java.time.LocalDate).now(), 'yyyy-MM-dd')}" />
 
-    <label>Select Insurance (optional):</label>
-    <select name="insuranceId">
-        <option th:each="i : ${insurances}" th:value="${i.id}" th:text="${i.providerName + ' - ₹' + i.cost}"></option>
-    </select><br/>
+    <label for="insuranceId">Select Insurance (optional):</label>
+    <select name="insuranceId" id="insuranceId">
+        <option value="" disabled selected>Select an insurance</option>
+        <option th:each="i : ${insurances}"
+                th:value="${i.id}"
+                th:text="${i.providerName + ' - ₹' + i.cost}"></option>
+    </select>
 
-    <button type="submit">Confirm Booking</button>
+    <button type="submit">🚗 Confirm Booking</button>
 </form>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const today = new Date().toISOString().split('T')[0];
