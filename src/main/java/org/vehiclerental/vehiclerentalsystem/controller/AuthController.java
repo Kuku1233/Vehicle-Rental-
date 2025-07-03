@@ -36,12 +36,8 @@ public class AuthController {
             model.addAttribute("error", "Username already exists!");
             return "register";
         }
-
-
-        // Hash the password before saving
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        // Set default role
         user.setRole("ROLE_CUSTOMER");
 
         userService.saveUser(user);

@@ -18,7 +18,7 @@ public class Booking {
     private String customerUsername;
     private String status;
     @Column(name = "returned")
-    private Boolean returned = false;
+    private Boolean returned= false;
 
     @ManyToOne
     @JoinColumn(name = "vehicle_id", nullable = false)

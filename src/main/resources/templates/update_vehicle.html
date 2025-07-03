@@ -66,6 +66,9 @@
     <label>Price per Day:</label>
     <input type="number" th:field="*{pricePerDay}" step="0.01" required/>
 
+    <label>Number of Cars Available:</label>
+    <input type="number" name="stock" min="0" required />
+
     <label>Upload New Image (optional):</label>
     <input type="file" name="imageFile" />
 

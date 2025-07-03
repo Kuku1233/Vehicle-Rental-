@@ -19,11 +19,12 @@ public class Vehicle {
     private String model;
     @Column(nullable = false)
     private String type;
-    // Sedan, SUV, etc.
     @Column(nullable = false)
     private double pricePerDay;
     @Column(name = "image_path")
     private String imagePath;
+    @Column
+    private int stock;
 
 
     private boolean available = true;
@@ -39,11 +40,4 @@ public class Vehicle {
         this.available = true;
     }
 
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
 }

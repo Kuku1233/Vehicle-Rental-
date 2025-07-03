@@ -5,7 +5,6 @@ import org.vehiclerental.vehiclerentalsystem.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,9 +24,6 @@ public class AdminController {
 
     @Autowired
     private BookingService bookingService;
-
-    private static final String UPLOAD_DIR = "src/main/resources/static/images/";
-
 
     @GetMapping("/dashboard")
     public String dashboard() {

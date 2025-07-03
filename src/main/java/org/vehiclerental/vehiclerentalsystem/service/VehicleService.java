@@ -14,7 +14,7 @@ public class VehicleService {
     private VehicleRepository vehicleRepository;
 
     public List<Vehicle> getAllAvailableVehicles() {
-        return vehicleRepository.findByAvailableTrue();
+        return vehicleRepository.findByAvailableTrueAndStockGreaterThan(0);
     }
 
     public Vehicle saveVehicle(Vehicle vehicle) {
